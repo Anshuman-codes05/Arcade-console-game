@@ -10,16 +10,17 @@
   <link rel="icon" type="image/png" href="icon-192.png" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <title>Arcade</title>
-  <link rel="stylesheet" href="styles.css?v=14" />
+  <link rel="stylesheet" href="styles.css?v=15" />
 </head>
 <body>
   <main class="arcade" aria-label="Arcade console">
-    <div class="tv-boot" id="tvBoot" aria-hidden="true"><img src="boot-icon.png?v=14" alt="" class="boot-icon"></div>
+    <div class="tv-boot" id="tvBoot" aria-hidden="true"><img src="boot-icon.png?v=15" alt="" class="boot-icon"></div>
     <section class="screen-frame">
       <button class="round-button" id="closeButton" aria-label="Leave game">×</button>
       <div class="top-actions">
         <button class="round-button" id="soundButton" aria-label="Toggle sound">🔊</button>
       </div>
+      <div class="top-status" id="topStatus"><span class="led"></span><span id="statusText">READY TO PLAY</span></div>
       <div class="screen" id="screen">
         <div class="crt-beam" aria-hidden="true"></div>
         <div class="scanlines"></div>
@@ -187,7 +188,6 @@
                 </g>
               </g>
             </svg>
-            <div class="top-status"><span class="led"></span><span id="statusText">READY TO PLAY</span></div>
           </div>
           <div class="menu-screen">
             <div class="screen-heading"><span>SELECT YOUR GAME</span><span id="gameCount">01/05</span></div>
@@ -284,7 +284,7 @@
   <div class="rotate-hint" id="rotateHint">BEST IN PORTRAIT</div>
   </main>
   <div class="toast" id="toast" role="status"></div>
-  <script src="script.js?v=14"></script>
+  <script src="script.js?v=15"></script>
   <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}</script>
 </body>
 </html>

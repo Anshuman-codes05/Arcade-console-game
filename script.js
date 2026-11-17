@@ -78,7 +78,7 @@ function resizeCanvas(){
     if(!area) return;
     const aw=area.clientWidth, ah=area.clientHeight;
     if(aw<10||ah<10) return;
-    const h=Math.min(ah,Math.round(aw*430/560*1.15));
+    const h=Math.min(ah,Math.round(aw*430/560*1.05));
     canvas.style.width=`${Math.floor(aw)}px`;
     canvas.style.height=`${Math.max(1,h)}px`;
     return;
