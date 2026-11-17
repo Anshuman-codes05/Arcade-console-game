@@ -10,11 +10,11 @@
   <link rel="icon" type="image/png" href="icon-192.png" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <title>Arcade</title>
-  <link rel="stylesheet" href="styles.css?v=17" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
   <main class="arcade" aria-label="Arcade console">
-    <div class="tv-boot" id="tvBoot" aria-hidden="true"><img src="boot-icon.png?v=17" alt="" class="boot-icon"></div>
+    <div class="tv-boot" id="tvBoot" aria-hidden="true"><img src="boot-icon.png?v=18" alt="" class="boot-icon"></div>
     <section class="screen-frame">
       <button class="round-button" id="closeButton" aria-label="Leave game">×</button>
       <div class="top-actions">
@@ -112,7 +112,7 @@
         </div>
         <div class="game-view hidden" id="gameView">
           <div class="screen-banner" aria-label="Arcade banner">
-            <svg class="top-banner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges" aria-hidden="true">
+            <svg class="top-banner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true">
               <rect width="640" height="200" fill="#2c2142" />
               <rect x="0" y="0" width="640" height="26" fill="#433663" />
               <polygon points="0,0 26,0 10,26 0,26" fill="#544678" />
@@ -284,7 +284,7 @@
   <div class="rotate-hint" id="rotateHint">BEST IN PORTRAIT</div>
   </main>
   <div class="toast" id="toast" role="status"></div>
-  <script src="script.js?v=17"></script>
+  <script src="script.js?v=18"></script>
   <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}</script>
 </body>
 </html>
