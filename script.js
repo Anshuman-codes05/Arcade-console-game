@@ -45,7 +45,7 @@ document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==
 function isTouch(){return ('ontouchstart' in window)||navigator.maxTouchPoints>0}
 const gameBgm=['car','snake','cricket','tank','sky'];
 function enterMenu(){ if(started) return; started=true; ensureAudio(); $('#startScreen')?.classList.add('hidden'); screenView.classList.remove('hidden'); $('#statusText').textContent='SELECT GAME'; renderMenu(); sfx('start'); playBGM('menu'); }
-function startGame(){if(!started) enterMenu();hideGameOver();activeGame=selected;sessionStartedAt=Date.now();screenView.classList.add('hidden');canvasWrap.classList.remove('hidden');$('#playTitle').textContent=games[activeGame].name.toUpperCase();const hints=['D-PAD STEER · B MENU','D-PAD MOVE · B MENU','S/B TO HIT · B MENU','D-PAD MOVE · S/B SHOOT · B MENU','S/B/UP/TAP FLAP · B MENU'];$('#playHint').textContent=hints[activeGame]||'B TO MENU';score=0;paused=false;keys={};$('#score').textContent='00000';$('#statusText').textContent='PLAYING';cancelAnimationFrame(animation);initGame(activeGame);resizeCanvas();playBGM(gameBgm[activeGame]);requestAnimationFrame(()=>{fitArcade();loop(performance.now())});sfx('start')}
+function startGame(){if(!started) enterMenu();hideGameOver();activeGame=selected;sessionStartedAt=Date.now();screenView.classList.add('hidden');canvasWrap.classList.remove('hidden');const areaEl=document.querySelector('.canvas-area');const bgc=gameBg[activeGame]||'#9edb8e';canvas.style.background=bgc;if(areaEl)areaEl.style.background=bgc;$('#playTitle').textContent=games[activeGame].name.toUpperCase();const hints=['D-PAD STEER · B MENU','D-PAD MOVE · B MENU','S/B TO HIT · B MENU','D-PAD MOVE · S/B SHOOT · B MENU','S/B/UP/TAP FLAP · B MENU'];$('#playHint').textContent=hints[activeGame]||'B TO MENU';score=0;paused=false;keys={};$('#score').textContent='00000';$('#statusText').textContent='PLAYING';cancelAnimationFrame(animation);initGame(activeGame);resizeCanvas();playBGM(gameBgm[activeGame]);requestAnimationFrame(()=>{fitArcade();loop(performance.now())});sfx('start')}
 function endGame(options={}){const finalScore=Math.floor(score);if(activeGame!==null){bestScores[activeGame]=Math.max(bestScores[activeGame]||0,finalScore);localStorage.setItem('arcadeBestScores',JSON.stringify(bestScores))} showGameOver(finalScore,options)}
 let goTimer=null, goMosaic=null;
 function hideGameOver(){gameOver=false; const el=$('#gameOverScreen'); if(el){el.classList.add('hidden'); el.setAttribute('aria-hidden','true')} if(goTimer){clearInterval(goTimer); goTimer=null} if(goMosaic){cancelAnimationFrame(goMosaic); goMosaic=null}}
@@ -69,8 +69,25 @@ function showGameOver(finalScore,options={}){ if(gameOver) return; gameOver=true
   goTimer=setInterval(()=>{ count--; if(label) label.textContent=count>0?`${labelPrefix} (${count})`:labelPrefix; if(count<=0){ clearInterval(goTimer); goTimer=null; restartCurrentGame(); } },1000);
   if(btn){ btn.style.cursor='pointer'; btn.onclick=()=>{ if(goTimer){clearInterval(goTimer);goTimer=null} restartCurrentGame(); }; }
 }
-function backToMenu(){ hideGameOver(); cancelAnimationFrame(animation);activeGame=null;paused=false;keys={};canvasWrap.classList.add('hidden');screenView.classList.remove('hidden');$('#statusText').textContent='SELECT GAME';renderMenu(); if(started) playBGM('menu'); requestAnimationFrame(fitArcade);}
-function resizeCanvas(){if(window.innerWidth<=600&&!canvasWrap.classList.contains('hidden')){canvas.style.height='';return}const ratio=canvas.clientWidth/560;canvas.style.height=`${430*ratio}px`}
+function backToMenu(){ hideGameOver(); cancelAnimationFrame(animation);activeGame=null;paused=false;keys={};canvas.style.background='';const areaEl=document.querySelector('.canvas-area');if(areaEl)areaEl.style.background='';canvasWrap.classList.add('hidden');screenView.classList.remove('hidden');$('#statusText').textContent='SELECT GAME';renderMenu(); if(started) playBGM('menu'); requestAnimationFrame(fitArcade);}
+const gameBg=['#6ab55d','#a5d991','#78c86b','#83bd8a','#efe9dd'];
+function resizeCanvas(){
+  if(window.innerWidth<=600){
+    if(canvasWrap.classList.contains('hidden')) return;
+    const area=document.querySelector('.canvas-area');
+    if(!area) return;
+    const aw=area.clientWidth, ah=area.clientHeight;
+    if(aw<10||ah<10) return;
+    const h=Math.min(ah,Math.round(aw*430/560*1.15));
+    canvas.style.width=`${Math.floor(aw)}px`;
+    canvas.style.height=`${Math.max(1,h)}px`;
+    return;
+  }
+  canvas.style.width='';
+  canvas.style.height='';
+  const ratio=canvas.clientWidth/560;
+  canvas.style.height=`${430*ratio}px`;
+}
 function initGame(id){gameOver=false;gameState={};
   if(id===0){gameState={car:{x:280,y:360},traffic:[],tick:0,speed:3.2,spawn:42}}
   if(id===1){gameState={snake:[{x:14,y:10},{x:13,y:10},{x:12,y:10}],dir:{x:1,y:0},next:{x:1,y:0},food:spawnFood([{x:14,y:10},{x:13,y:10},{x:12,y:10}]),tick:0,step:10,alive:true}}
@@ -274,23 +291,10 @@ function fitArcade(){
     root.style.top='0px';
     return;
   }
-  root.style.transform='translateX(-50%) scale(1)';
-  root.style.top='0px';
-  const vv=window.visualViewport;
-  const viewportHeight=vv?.height||window.innerHeight;
-  const viewportWidth=vv?.width||window.innerWidth;
-  const padX=8, padY=8;
-  const naturalHeight=root.offsetHeight;
-  const baseWidth=430;
-  const widthScale=(viewportWidth-padX)/baseWidth;
-  const heightScale=(viewportHeight-padY)/Math.max(naturalHeight,1);
-  const scale=Math.min(widthScale,heightScale,1);
-  const fittedScale=Math.max(scale,0.3);
-  document.documentElement.style.setProperty('--arcade-scale',String(fittedScale));
-  const scaledHeight=naturalHeight*fittedScale;
-  const topOffset=Math.max(0,(viewportHeight-scaledHeight)/2);
-  root.style.top=`${topOffset}px`;
-  root.style.transform=`translateX(-50%) scale(${fittedScale})`;
+  document.documentElement.style.setProperty('--arcade-scale','1');
+  root.style.transform='';
+  root.style.top='';
+  requestAnimationFrame(resizeCanvas);
 }
 const themes={
   lavender:{name:'Lavender',description:'Soft lavender shell',shell:'#c4a8e9',light:'#e4d8fa',dark:'#402763',deep:'#24183b',rim:'#8e73bb',rim2:'#9c7fc8',glow:'#ddd0f2',accent:'#7351bd'},
