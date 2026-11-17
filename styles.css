@@ -102,7 +102,7 @@ body.theme-night .play-tri{border-left-color:#eee9ff}
 
 @keyframes consoleSettle { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes menuRise { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
-.scene,.controls,.screen-frame,.screen-banner{animation:consoleSettle .55s ease-out both}
+.scene,.controls,.screen-banner{animation:consoleSettle .55s ease-out both}
 .game-option{animation:menuRise .35s ease-out both}
 .game-option:nth-child(2){animation-delay:.04s}.game-option:nth-child(3){animation-delay:.08s}.game-option:nth-child(4){animation-delay:.12s}.game-option:nth-child(5){animation-delay:.16s}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}}
@@ -149,3 +149,30 @@ body.theme-night .play-tri{border-left-color:#eee9ff}
 @media (max-width: 600px) and (max-height: 720px) {
   .arcade:has(#canvasWrap:not(.hidden)) .screen{min-height:0}
 }
+
+/* ---- Retro CRT power-on ---- */
+.crt-beam{position:fixed;left:0;right:0;top:50%;height:5px;transform:translateY(-50%) scaleX(.2);background:#fff;box-shadow:0 0 22px 8px rgba(255,255,255,.95),0 0 70px 26px rgba(190,150,255,.5);opacity:0;pointer-events:none;z-index:9998}
+.arcade.crt-on .screen-frame{animation:crtPowerOn 1.05s cubic-bezier(.18,.86,.24,1) both;transform-origin:50% 50%}
+.arcade.crt-on .crt-beam{animation:crtBeam 1.05s ease-out both}
+.arcade.crt-on .controls{animation:controlSettle .45s ease-out .5s both}
+.arcade.crt-on .screen-banner{animation:bannerWarm .6s ease-out .35s both}
+@keyframes crtPowerOn{
+  0%{transform:scaleY(.004) scaleX(.55);filter:brightness(2.9) saturate(1.35);opacity:.95}
+  10%{transform:scaleY(.005) scaleX(1);filter:brightness(3.4) saturate(1.45)}
+  26%{transform:scaleY(.022) scaleX(1);filter:brightness(2.7) saturate(1.2)}
+  44%{transform:scaleY(.42) scaleX(1);filter:brightness(2) saturate(1.1)}
+  62%{transform:scaleY(1.03) scaleX(1);filter:brightness(1.45)}
+  70%{transform:scaleY(.985) scaleX(1);filter:brightness(1.08)}
+  78%{transform:scaleY(1.012) scaleX(1);filter:brightness(1.24)}
+  86%{transform:scaleY(.997) scaleX(1);filter:brightness(1.04)}
+  100%{transform:scaleY(1) scaleX(1);filter:brightness(1)}
+}
+@keyframes crtBeam{
+  0%{opacity:0;transform:translateY(-50%) scaleX(.25)}
+  9%{opacity:1;transform:translateY(-50%) scaleX(1)}
+  40%{opacity:.8;transform:translateY(-50%) scaleX(1)}
+  62%{opacity:0;transform:translateY(-50%) scaleX(1)}
+  100%{opacity:0;transform:translateY(-50%) scaleX(1)}
+}
+@keyframes controlSettle{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bannerWarm{from{opacity:0}to{opacity:1}}
