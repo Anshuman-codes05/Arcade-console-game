@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="310" viewBox="0 0 220 155" role="img" aria-labelledby="title desc">
+  <title id="title">Lavender retro arcade controller</title>
+  <desc id="desc">A compact lavender arcade controller with a four-way directional pad, B and S action buttons, TIME and SET buttons, and speaker holes.</desc>
+  <defs>
+    <linearGradient id="bodyFill" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#d6c2f2"/>
+      <stop offset=".48" stop-color="#c4a8e9"/>
+      <stop offset="1" stop-color="#a985d9"/>
+    </linearGradient>
+    <linearGradient id="buttonFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#29272f"/>
+      <stop offset=".55" stop-color="#17161d"/>
+      <stop offset="1" stop-color="#08080d"/>
+    </linearGradient>
+    <linearGradient id="buttonShine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".18"/>
+      <stop offset=".45" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity=".18"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eee2ff"/>
+      <stop offset=".5" stop-color="#9e7bc9"/>
+      <stop offset="1" stop-color="#7853ad"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dy="3" dx="1"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".35"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+
+  <!-- Small orange tab visible behind the top edge -->
+  <path d="M99 0h26v13H99z" fill="#bd7b2d"/>
+  <path d="M102 0v12M108 0v12M114 0v12M120 0v12" stroke="#e3a04b" stroke-width="1" opacity=".7"/>
+
+  <!-- Outer body and raised rim -->
+  <path filter="url(#shadow)" d="M27 9
+    Q17 9 12 18 L8 31 Q6 37 8 45
+    L14 61 Q10 68 10 77
+    L10 119 Q10 132 22 139
+    Q30 145 45 145
+    L174 145 Q195 145 207 130
+    Q214 122 214 108
+    L214 43 Q214 25 202 16
+    Q194 9 181 9Z"
+    fill="url(#rim)" stroke="#b49bd5" stroke-width="1.5"/>
+  <path d="M28 12
+    Q19 12 15 21 L11 34 Q9 39 11 45
+    L17 62 Q13 69 13 78
+    L13 117 Q13 129 24 136
+    Q32 141 46 141
+    L173 141 Q193 141 204 127
+    Q210 120 210 107
+    L210 44 Q210 27 199 19
+    Q191 12 180 12Z"
+    fill="url(#bodyFill)" stroke="#cbb5e7" stroke-width="1.2"/>
+
+  <!-- Soft inset highlight -->
+  <path d="M24 17 Q19 20 17 30 L14 40" fill="none" stroke="#f3eaff" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+  <path d="M25 137 Q35 143 50 142 L172 142" fill="none" stroke="#8d6ab9" stroke-width="1.2" opacity=".35"/>
+
+  <!-- Faint circular D-pad recess -->
+  <circle cx="59" cy="74" r="43" fill="#9878c0" opacity=".18"/>
+  <circle cx="59" cy="74" r="39" fill="none" stroke="#9b7cc0" stroke-width="2" opacity=".28"/>
+  <circle cx="59" cy="74" r="34" fill="none" stroke="#eadcf9" stroke-width="1" opacity=".25"/>
+
+  <!-- Direction buttons -->
+  <g>
+    <rect x="45" y="30" width="29" height="29" rx="8" fill="url(#buttonFill)" stroke="#51475f" stroke-width="1"/>
+    <rect x="45" y="30" width="29" height="29" rx="8" fill="url(#buttonShine)"/>
+    <path d="M59.5 37.5l-4.5 7h9z" fill="#d8d5df"/>
+
+    <rect x="17" y="59" width="29" height="29" rx="8" fill="url(#buttonFill)" stroke="#51475f" stroke-width="1"/>
+    <rect x="17" y="59" width="29" height="29" rx="8" fill="url(#buttonShine)"/>
+    <path d="M24.5 73.5l7-4.5v9z" fill="#d8d5df"/>
+
+    <rect x="74" y="59" width="29" height="29" rx="8" fill="url(#buttonFill)" stroke="#51475f" stroke-width="1"/>
+    <rect x="74" y="59" width="29" height="29" rx="8" fill="url(#buttonShine)"/>
+    <path d="M95 73.5l-7-4.5v9z" fill="#d8d5df"/>
+
+    <rect x="45" y="88" width="29" height="29" rx="8" fill="url(#buttonFill)" stroke="#51475f" stroke-width="1"/>
+    <rect x="45" y="88" width="29" height="29" rx="8" fill="url(#buttonShine)"/>
+    <path d="M59.5 109.5l-4.5-7h9z" fill="#d8d5df"/>
+  </g>
+
+  <!-- Action buttons -->
+  <g>
+    <rect x="125" y="55" width="36" height="36" rx="10" fill="url(#buttonFill)" stroke="#51475f" stroke-width="1.2"/>
+    <rect x="125" y="55" width="36" height="36" rx="10" fill="url(#buttonShine)"/>
+    <text x="143" y="77.5" fill="#e9e7ed" font-family="Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">B</text>
+
+    <rect x="171" y="55" width="36" height="36" rx="10" fill="url(#buttonFill)" stroke="#51475f" stroke-width="1.2"/>
+    <rect x="171" y="55" width="36" height="36" rx="10" fill="url(#buttonShine)"/>
+    <text x="189" y="77.5" fill="#e9e7ed" font-family="Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">S</text>
+  </g>
+
+  <!-- TIME and SET controls -->
+  <g>
+    <circle cx="170.5" cy="22.5" r="7.2" fill="url(#buttonFill)" stroke="#7a6494" stroke-width="1"/>
+    <circle cx="170.5" cy="22.5" r="3.5" fill="#d9c5f1"/>
+    <circle cx="195.5" cy="22.5" r="7.2" fill="url(#buttonFill)" stroke="#7a6494" stroke-width="1"/>
+    <circle cx="195.5" cy="22.5" r="3.5" fill="#d9c5f1"/>
+    <text x="170.5" y="33.5" fill="#55466b" font-family="Arial, sans-serif" font-size="4.2" font-weight="700" text-anchor="middle">TIME</text>
+    <text x="195.5" y="33.5" fill="#55466b" font-family="Arial, sans-serif" font-size="4.2" font-weight="700" text-anchor="middle">SET</text>
+  </g>
+
+  <!-- Subtle molded details -->
+  <rect x="125" y="25" width="34" height="5" rx="2.5" fill="#9275b7" opacity=".23"/>
+  <rect x="132" y="103" width="15" height="5" rx="2.5" fill="#8f70b4" opacity=".25"/>
+  <rect x="160" y="103" width="15" height="5" rx="2.5" fill="#8f70b4" opacity=".18"/>
+
+  <!-- Speaker holes -->
+  <g fill="#8d6bb7" opacity=".75">
+    <circle cx="30" cy="120" r="2.2"/>
+    <circle cx="42" cy="124" r="2.2"/>
+    <circle cx="54" cy="127" r="2.2"/>
+    <circle cx="28" cy="132" r="2.2"/>
+    <circle cx="40" cy="136" r="2.2"/>
+    <circle cx="52" cy="138" r="2.2"/>
+    <circle cx="64" cy="132" r="2.2"/>
+  </g>
+  <g fill="#e7d8f7" opacity=".45">
+    <circle cx="29.3" cy="119.3" r=".8"/>
+    <circle cx="41.3" cy="123.3" r=".8"/>
+    <circle cx="53.3" cy="126.3" r=".8"/>
+  </g>
+</svg>

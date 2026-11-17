@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#b9a2df" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <title>Arcade</title>
+  <link rel="stylesheet" href="styles.css?v=6" />
+</head>
+<body>
+  <main class="arcade" aria-label="Arcade console">
+    <div class="tv-boot" id="tvBoot" aria-hidden="true"><img src="boot-icon.png?v=6" alt="" class="boot-icon"></div>
+    <section class="screen-frame">
+      <button class="round-button" id="closeButton" aria-label="Leave game">×</button>
+      <div class="top-actions">
+        <button class="round-button" id="soundButton" aria-label="Toggle sound">🔊</button>
+      </div>
+      <div class="screen" id="screen">
+        <div class="scanlines"></div>
+        <div class="start-screen" id="startScreen" role="button" aria-label="Start game" tabindex="0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges">
+            <defs>
+              <linearGradient id="arcadeGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f7941d" />
+                <stop offset="50%" stop-color="#f15a24" />
+                <stop offset="100%" stop-color="#d92b2b" />
+              </linearGradient>
+              <style>
+                .pixel-text { font-family: 'Press Start 2P', 'Courier New', monospace; font-weight: 900; text-anchor: middle; }
+              </style>
+            </defs>
+            <rect width="600" height="800" fill="#f7f4eb" />
+            <text x="300" y="125" class="pixel-text" font-size="30" letter-spacing="3" fill="#683b9e">ANSHUMAN PRESENTS</text>
+            <g id="sprite-snake" transform="translate(248, 155) scale(3.5)">
+              <path d="M 4,0 L 12,0 L 12,8 L 6,8 L 6,12 L 22,12 L 22,22 L 18,22 L 18,28 L 28,28 L 28,24 L 32,24 L 32,32 L 26,32 L 26,34 L 16,34 L 16,30 L 14,30 L 14,18 L 18,18 L 18,16 L 2,16 L 2,10 L 8,10 L 8,6 L 2,6 L 2,2 L 4,2 Z" fill="#1e1e24" />
+              <path d="M 4,2 L 10,2 L 10,6 L 4,6 L 4,14 L 20,14 L 20,20 L 16,20 L 16,30 L 26,30 L 26,26 L 30,26 L 30,30 L 24,30 L 24,32 L 18,32 L 18,26 L 16,26 L 16,16 L 2,16 L 2,12 L 8,12 L 8,8 L 4,8 Z" fill="#68b848" />
+              <rect x="0" y="4" width="2" height="2" fill="#d92b2b" />
+              <rect x="6" y="3" width="2" height="2" fill="#f5e653" />
+            </g>
+            <g id="sprite-car" transform="translate(155, 150) rotate(32) scale(3.5)">
+              <rect x="2" y="0" width="6" height="4" fill="#1e1e24" />
+              <rect x="16" y="0" width="6" height="4" fill="#1e1e24" />
+              <rect x="6" y="3" width="12" height="16" fill="#1e1e24" />
+              <rect x="1" y="14" width="5" height="7" fill="#1e1e24" />
+              <rect x="18" y="14" width="5" height="7" fill="#1e1e24" />
+              <rect x="8" y="5" width="8" height="12" fill="#e05348" />
+              <rect x="8" y="8" width="8" height="5" fill="#bce3fa" />
+              <rect x="9" y="15" width="6" height="3" fill="#e05348" />
+            </g>
+            <g id="sprite-cricket" transform="translate(390, 145) scale(3.5)">
+              <polygon points="14,0 18,0 18,3 7,16 3,16 0,13 0,9 11,3" fill="#1e1e24" />
+              <polygon points="14,2 16,2 12,7 10,5" fill="#8c583a" />
+              <polygon points="10,7 12,9 5,15 2,12" fill="#e3a869" />
+            </g>
+            <g transform="translate(148, 252) rotate(-18) scale(3.2)">
+              <path d="M 2,0 L 10,0 L 10,4 L 4,4 L 4,10 L 10,10 L 10,14 L 2,14 L 0,12 L 0,2 Z" fill="#1e1e24" />
+              <path d="M 3,1 L 9,1 L 9,3 L 3,3 L 3,11 L 9,11 L 9,13 L 3,13 L 1,11 L 1,3 Z" fill="#e04338" />
+            </g>
+            <g id="sprite-tank" transform="translate(438, 255) rotate(-14) scale(3.4)">
+              <rect x="8" y="0" width="4" height="4" fill="#1e1e24" />
+              <rect x="3" y="3" width="14" height="3" fill="#1e1e24" />
+              <rect x="1" y="6" width="18" height="9" fill="#1e1e24" />
+              <rect x="3" y="15" width="14" height="3" fill="#1e1e24" />
+              <rect x="5" y="4" width="10" height="2" fill="#6395e8" />
+              <rect x="3" y="7" width="14" height="7" fill="#3a6bc4" />
+              <rect x="5" y="8" width="10" height="3" fill="#a8c8ff" />
+              <rect x="4" y="15" width="2" height="2" fill="#a8c8ff" />
+              <rect x="8" y="15" width="2" height="2" fill="#a8c8ff" />
+              <rect x="12" y="15" width="2" height="2" fill="#a8c8ff" />
+            </g>
+            <g transform="translate(310, 165) scale(3.2)" fill="#f7941d" stroke="#d92b2b" stroke-width="0.6">
+              <polygon points="8,0 10,7 16,2 12,9 20,8 13,13 18,18 11,15 10,22 7,15 0,18 5,12 0,6 7,8" />
+            </g>
+            <g transform="translate(115, 280) scale(3.2)" fill="#f7941d" stroke="#d92b2b" stroke-width="0.6">
+              <polygon points="10,0 12,8 18,4 14,11 20,14 13,15 15,22 9,16 4,21 6,13 0,11 7,9" />
+            </g>
+            <g transform="translate(435, 300) scale(2.8)" fill="#f7941d" stroke="#d92b2b" stroke-width="0.6">
+              <polygon points="0,2 8,6 12,2 10,9 16,14 7,12 2,16 4,9" />
+            </g>
+            <g transform="translate(460, 185) scale(3)">
+              <polygon points="5,0 6,3 10,3 7,5 8,9 5,7 2,9 3,5 0,3 4,3" fill="#f5c842" stroke="#1e1e24" stroke-width="0.8" />
+            </g>
+            <g transform="translate(120, 228) scale(2.5)">
+              <polygon points="5,0 6,3 10,3 7,5 8,9 5,7 2,9 3,5 0,3 4,3" fill="#f7941d" stroke="#1e1e24" stroke-width="0.8" />
+            </g>
+            <g transform="translate(448, 345) scale(2.5)">
+              <polygon points="5,0 6,3 10,3 7,5 8,9 5,7 2,9 3,5 0,3 4,3" fill="#4682d9" stroke="#1e1e24" stroke-width="0.8" />
+            </g>
+            <g fill="#f5e653"><rect x="230" y="195" width="8" height="8" /><rect x="148" y="345" width="6" height="6" /></g>
+            <g fill="#d92b2b"><rect x="375" y="168" width="6" height="6" /></g>
+            <g fill="#4682d9"><rect x="158" y="226" width="6" height="6" /></g>
+            <g id="arcade-logo" transform="translate(300, 355)">
+              <text x="0" y="6" class="pixel-text" font-size="82" letter-spacing="4" fill="#7a1626" stroke="#1e1e24" stroke-width="10" stroke-linejoin="miter">ARCADE</text>
+              <text x="0" y="0" class="pixel-text" font-size="82" letter-spacing="4" fill="url(#arcadeGrad)" stroke="#1e1e24" stroke-width="4" stroke-linejoin="miter">ARCADE</text>
+              <text x="0" y="-2" class="pixel-text" font-size="82" letter-spacing="4" fill="none" stroke="#ffd24d" stroke-width="1.5" stroke-dasharray="12 6">ARCADE</text>
+            </g>
+            <text x="300" y="408" class="pixel-text" font-size="32" letter-spacing="3" fill="#1e1e24">A CONSOLE GAME</text>
+            <g id="press-s" transform="translate(300, 500)">
+              <polygon points="-120,-13 -112,-6 -120,1" fill="#1e1e24" />
+              <text x="0" y="0" class="pixel-text" font-size="27" letter-spacing="2" fill="#1e1e24">PRESS S TO PLAY</text>
+              <polygon points="120,-13 112,-6 120,1" fill="#1e1e24" />
+            </g>
+            <text x="300" y="590" class="pixel-text" font-size="20" letter-spacing="2" fill="#1e1e24">© 2026 ANSHUMAN GAMES</text>
+          </svg>
+        </div>
+        <div class="game-view hidden" id="gameView">
+          <div class="screen-banner" aria-label="Arcade banner">
+            <svg class="top-banner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges" aria-hidden="true">
+              <rect width="640" height="200" fill="#2c2142" />
+              <rect x="0" y="0" width="640" height="26" fill="#433663" />
+              <polygon points="0,0 26,0 10,26 0,26" fill="#544678" />
+              <rect x="0" y="26" width="640" height="6" fill="#1e162e" />
+              <path d="M 0,48 Q 0,32 16,32 L 624,32 Q 640,32 640,48 L 640,200 L 0,200 Z" fill="#eeebe1" />
+              <path d="M 0,48 Q 0,32 16,32 L 624,32 Q 640,32 640,48" fill="none" stroke="#b5b0a1" stroke-width="2" />
+              <g transform="translate(8, 50)">
+                <rect width="624" height="142" fill="#a8d8f8" />
+                <g fill="#ffffff">
+                  <rect x="48" y="8" width="40" height="10" />
+                  <rect x="32" y="18" width="72" height="14" />
+                  <rect x="412" y="0" width="40" height="6" />
+                  <rect x="396" y="6" width="72" height="14" />
+                  <rect x="572" y="20" width="4" height="12" />
+                  <rect x="568" y="24" width="12" height="4" />
+                </g>
+                <path d="M 0,100 L 60,100 L 60,72 L 88,72 L 88,48 L 148,48 L 148,72 L 176,72 L 176,104 L 244,104 L 244,64 L 276,64 L 276,40 L 340,40 L 340,64 L 372,64 L 372,102 L 444,102 L 444,66 L 476,66 L 476,36 L 532,36 L 532,66 L 560,66 L 560,100 L 624,100 L 624,124 L 0,124 Z" fill="#9bd17d" />
+                <rect x="0" y="120" width="624" height="6" fill="#78b856" />
+                <rect x="0" y="126" width="624" height="16" fill="#b87c4c" />
+                <g fill="#7d4e2d">
+                  <rect x="36" y="133" width="32" height="3" />
+                  <rect x="160" y="133" width="16" height="3" />
+                  <rect x="356" y="133" width="48" height="3" />
+                  <rect x="532" y="133" width="36" height="3" />
+                </g>
+                <g transform="translate(0, 74)">
+                  <rect x="0" y="0" width="4" height="28" fill="#2b2b36" />
+                  <rect x="4" y="2" width="10" height="6" fill="#2b2b36" />
+                  <rect x="4" y="4" width="6" height="4" fill="#ffffff" />
+                </g>
+                <g transform="translate(76, 62)">
+                  <rect x="4" y="0" width="24" height="16" fill="#2b2b36" />
+                  <rect x="4" y="56" width="24" height="16" fill="#2b2b36" />
+                  <rect x="76" y="6" width="20" height="12" fill="#2b2b36" />
+                  <rect x="76" y="54" width="20" height="12" fill="#2b2b36" />
+                  <rect x="12" y="14" width="52" height="44" fill="#2b2b36" />
+                  <rect x="64" y="20" width="32" height="32" fill="#2b2b36" />
+                  <rect x="96" y="24" width="8" height="24" fill="#2b2b36" />
+                  <rect x="16" y="18" width="44" height="36" fill="#e06658" />
+                  <rect x="60" y="24" width="32" height="24" fill="#e06658" />
+                  <rect x="92" y="28" width="6" height="16" fill="#e06658" />
+                  <rect x="20" y="24" width="6" height="24" fill="#e8e8e8" />
+                  <rect x="34" y="22" width="14" height="28" fill="#2b2b36" />
+                  <rect x="52" y="26" width="12" height="20" fill="#bce3fa" />
+                  <rect x="64" y="30" width="24" height="12" fill="#bce3fa" />
+                  <rect x="56" y="20" width="12" height="4" fill="#ffffff" />
+                  <rect x="56" y="48" width="12" height="4" fill="#ffffff" />
+                </g>
+                <g transform="translate(244, 70)">
+                  <path d="M 12,0 L 36,0 L 36,4 L 40,4 L 40,16 L 36,16 L 36,20 L 24,20 L 24,24 L 36,24 L 36,28 L 40,28 L 40,40 L 36,40 L 36,44 L 8,44 L 8,40 L 4,40 L 4,24 L 8,24 L 8,20 L 20,20 L 20,16 L 12,16 L 12,12 L 8,12 L 8,4 L 12,4 Z" fill="#2b2b36" />
+                  <path d="M 12,4 L 36,4 L 36,16 L 20,16 L 20,24 L 8,24 L 8,28 L 36,28 L 36,40 L 8,40 L 8,36 L 32,36 L 32,32 L 8,32 L 8,24 L 24,24 L 24,12 L 12,12 Z" fill="#68b848" />
+                  <rect x="16" y="6" width="4" height="4" fill="#f5e653" />
+                  <rect x="28" y="6" width="4" height="4" fill="#f5e653" />
+                </g>
+                <g transform="translate(384, 72)">
+                  <polygon points="40,0 48,0 48,8 44,12 40,16 36,20 32,24 28,28 24,32 20,36 16,40 12,44 4,44 0,40 0,32 4,28 8,24 12,20 16,16 20,12 24,12 28,8 32,4 36,0" fill="#2b2b36" />
+                  <polygon points="40,4 44,4 44,8 32,20 28,16" fill="#9c7a63" />
+                  <polygon points="24,16 32,24 12,40 4,32" fill="#d99b52" />
+                  <polygon points="20,20 24,24 12,36 8,32" fill="#f2c48d" />
+                </g>
+                <g transform="translate(532, 72)">
+                  <rect x="18" y="0" width="8" height="10" fill="#2b2b36" />
+                  <rect x="8" y="8" width="28" height="6" fill="#2b2b36" />
+                  <rect x="4" y="14" width="36" height="20" fill="#2b2b36" />
+                  <rect x="8" y="34" width="28" height="4" fill="#2b2b36" />
+                  <rect x="4" y="38" width="8" height="6" fill="#2b2b36" />
+                  <rect x="32" y="38" width="8" height="6" fill="#2b2b36" />
+                  <rect x="12" y="12" width="20" height="4" fill="#6395e8" />
+                  <rect x="8" y="16" width="28" height="16" fill="#4673c9" />
+                  <rect x="12" y="16" width="20" height="12" fill="#7aa8f5" />
+                  <rect x="14" y="20" width="16" height="8" fill="#2b2b36" />
+                  <rect x="18" y="22" width="8" height="4" fill="#a8c8ff" />
+                </g>
+              </g>
+            </svg>
+            <div class="top-status"><span class="led"></span><span id="statusText">READY TO PLAY</span></div>
+          </div>
+          <div class="menu-screen">
+            <div class="screen-heading"><span>SELECT YOUR GAME</span><span id="gameCount">01/05</span></div>
+            <div class="game-list" id="gameList"></div>
+            <div class="screen-footer"><span>BEST <b id="bestScore">01060</b></span><span id="footerPrompt">PRESS S TO PLAY <span class="play-tri"></span></span></div>
+          </div>
+        </div>
+        <div class="game-canvas-wrap hidden" id="canvasWrap">
+          <div class="play-header"><button id="backButton">← MENU</button><span id="playTitle">CAR RACE</span><span>SCORE <b id="score">00000</b></span></div>
+          <div class="canvas-area">
+            <canvas id="gameCanvas" width="560" height="430" aria-label="Game play area"></canvas>
+            <div id="gameOverScreen" class="game-over hidden" aria-hidden="true">
+              <svg id="game-over-screen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges">
+                <defs>
+                  <style>
+                    .go-font { font-family: 'Courier New', Courier, monospace; font-weight: 900; text-anchor: middle; }
+                    @keyframes blinkCursor { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.25; } }
+                    .play-again-pulse { animation: blinkCursor 1s infinite; cursor: pointer; }
+                  </style>
+                </defs>
+                <rect width="400" height="300" fill="#232436" />
+                <g id="game-over-content" opacity="0">
+                  <g id="go-title"></g>
+                  <text id="go-title-text" x="200" y="110" text-anchor="middle" font-family="'Press Start 2P','Courier New',monospace" font-size="26" font-weight="700" fill="#f29b91" stroke="#24183b" stroke-width="4" paint-order="stroke fill">GAME OVER</text>
+                  <text id="go-score-text" x="200" y="160" text-anchor="middle" font-family="'Press Start 2P','Courier New',monospace" font-size="18" font-weight="700" fill="#ffffff" stroke="#24183b" stroke-width="3" paint-order="stroke fill">SCORE 00000</text>
+                  <g id="play-again-btn" class="play-again-pulse" transform="translate(100, 190)">
+                    <rect width="200" height="34" rx="4" fill="#5e4bb8" stroke="#f29b91" stroke-width="2" />
+                    <polygon points="16,12 26,17 16,22" fill="#ffffff" />
+                    <text id="play-again-label" x="112" y="22" text-anchor="middle" font-family="'Press Start 2P','Courier New',monospace" font-size="12" font-weight="700" fill="#ffffff">PLAY AGAIN (5)</text>
+                  </g>
+                  <text x="200" y="252" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="700" fill="#cfc8ff">TAP BUTTON TO CONTINUE</text>
+                </g>
+                <g id="mosaic-layer"></g>
+              </svg>
+            </div>
+          </div>
+          <div class="play-hint" id="playHint">ARROW KEYS TO DRIVE · SPACE TO PAUSE</div>
+        </div>
+        <div class="modal hidden" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+          <div class="modal-card"><button class="modal-close" id="helpClose">×</button><h2 id="helpTitle">HOW TO PLAY</h2><p id="helpText"></p><p class="modal-credit">DESIGNED BY ANSHUMAN</p></div>
+        </div>
+        <div class="theme-modal hidden" id="themeModal" role="dialog" aria-modal="true" aria-labelledby="themeTitle">
+          <div class="theme-card">
+            <button class="theme-close" id="themeClose" aria-label="Close themes">×</button>
+            <h2 id="themeTitle">ARCADE THEMES</h2>
+            <div class="theme-preview" id="themePreview" aria-hidden="true"><div class="preview-screen">ARCADE</div><div class="preview-controller"><span class="preview-dpad">▲<b>◀</b><i>▶</i>▼</span><strong>B</strong><strong>S</strong></div></div>
+            <h3 id="themeName">Lavender</h3><p id="themeDescription">Soft lavender shell</p>
+            <div class="theme-label">SHELL</div>
+            <div class="theme-swatches" role="group" aria-label="Choose shell theme">
+              <button class="theme-swatch lavender active" data-theme="lavender" aria-label="Lavender theme"></button><button class="theme-swatch pink" data-theme="pink" aria-label="Light pink theme"></button><button class="theme-swatch purple" data-theme="purple" aria-label="Purple theme"></button><button class="theme-swatch red" data-theme="red" aria-label="Red theme"></button><button class="theme-swatch blue" data-theme="blue" aria-label="Blue theme"></button>
+            </div>
+            <button class="theme-done" id="themeDone">DONE <span>→</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="brand">ARCADE</div>
+    </section>
+
+    <section class="controls" aria-label="Arcade controller">
+      <svg class="controller-bg" viewBox="0 0 220 155" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <linearGradient id="bodyFill" x1="0" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="var(--shell-hi,#d6c2f2)"/><stop offset=".48" stop-color="var(--shell-mid,#c4a8e9)"/><stop offset="1" stop-color="var(--shell-lo,#a985d9)"/></linearGradient>
+          <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--shell-light,#eee2ff)"/><stop offset=".5" stop-color="var(--shell-rim,#9e7bc9)"/><stop offset="1" stop-color="var(--shell-accent,#7853ad)"/></linearGradient>
+        </defs>
+        <path d="M27 9 Q17 9 12 18 L8 31 Q6 37 8 45 L14 61 Q10 68 10 77 L10 119 Q10 132 22 139 Q30 145 45 145 L174 145 Q195 145 207 130 Q214 122 214 108 L214 43 Q214 25 202 16 Q194 9 181 9Z" fill="url(#rim)" stroke="var(--shell-rim,#b49bd5)" stroke-width="1.5"/>
+        <path d="M28 12 Q19 12 15 21 L11 34 Q9 39 11 45 L17 62 Q13 69 13 78 L13 117 Q13 129 24 136 Q32 141 46 141 L173 141 Q193 141 204 127 Q210 120 210 107 L210 44 Q210 27 199 19 Q191 12 180 12Z" fill="url(#bodyFill)" stroke="var(--shell-light,#cbb5e7)" stroke-width="1.2"/>
+        <path d="M24 17 Q19 20 17 30 L14 40" fill="none" stroke="var(--shell-light,#f3eaff)" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+        <path d="M25 137 Q35 143 50 142 L172 142" fill="none" stroke="var(--shell-rim,#8d6ab9)" stroke-width="1.2" opacity=".35"/>
+        <circle cx="59" cy="74" r="43" fill="var(--shell-mid,#9878c0)" opacity=".18"/>
+        <circle cx="59" cy="74" r="39" fill="none" stroke="var(--shell-rim,#9b7cc0)" stroke-width="2" opacity=".28"/>
+        <circle cx="59" cy="74" r="34" fill="none" stroke="var(--shell-light,#eadcf9)" stroke-width="1" opacity=".25"/>
+        <rect x="125" y="25" width="34" height="5" rx="2.5" fill="var(--shell-rim,#9275b7)" opacity=".23"/>
+        <rect x="132" y="103" width="15" height="5" rx="2.5" fill="var(--shell-rim,#8f70b4)" opacity=".25"/>
+        <rect x="160" y="103" width="15" height="5" rx="2.5" fill="var(--shell-rim,#8f70b4)" opacity=".18"/>
+        <g fill="var(--shell-rim,#8d6bb7)" opacity=".75"><circle cx="30" cy="120" r="2.2"/><circle cx="42" cy="124" r="2.2"/><circle cx="54" cy="127" r="2.2"/><circle cx="28" cy="132" r="2.2"/><circle cx="40" cy="136" r="2.2"/><circle cx="52" cy="138" r="2.2"/><circle cx="64" cy="132" r="2.2"/></g>
+        <g fill="var(--shell-light,#e7d8f7)" opacity=".45"><circle cx="29.3" cy="119.3" r=".8"/><circle cx="41.3" cy="123.3" r=".8"/><circle cx="53.3" cy="126.3" r=".8"/></g>
+      </svg>
+      <div class="dpad" aria-label="Directional controls">
+        <button data-key="ArrowUp" class="up" aria-label="Up"><svg viewBox="0 0 29 29"><path d="M14.5 7.5l-4.5 7h9z" fill="#d8d5df"/></svg></button>
+        <button data-key="ArrowLeft" class="left" aria-label="Left"><svg viewBox="0 0 29 29"><path d="M7.5 14.5l7-4.5v9z" fill="#d8d5df"/></svg></button>
+        <button data-key="ArrowRight" class="right" aria-label="Right"><svg viewBox="0 0 29 29"><path d="M21 14.5l-7-4.5v9z" fill="#d8d5df"/></svg></button>
+        <button data-key="ArrowDown" class="down" aria-label="Down"><svg viewBox="0 0 29 29"><path d="M14.5 21.5l-4.5-7h9z" fill="#d8d5df"/></svg></button>
+      </div>
+      <div class="action-buttons">
+        <button data-key="b" aria-label="Button B">B</button>
+        <button data-key="s" aria-label="Button S">S</button>
+      </div>
+      <div class="control-tools" aria-label="Controller utilities">
+        <button id="themeButton" class="mini-control" type="button" aria-label="Theme"><span class="mini-dot"></span><small>THEME</small></button>
+        <button id="helpButton" class="mini-control" type="button" aria-label="Help"><span class="mini-dot"></span><small>HELP</small></button>
+      </div>
+    </section>
+    <footer class="designed">DESIGNED BY <strong>ANSHUMAN</strong></footer>
+  <div class="rotate-hint" id="rotateHint">BEST IN PORTRAIT</div>
+  </main>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js?v=6"></script>
+  <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}</script>
+</body>
+</html>

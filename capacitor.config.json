@@ -1,0 +1,6 @@
+{
+  "appId": "com.anshuman.arcadeconsole",
+  "appName": "Arcade Console",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
