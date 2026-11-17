@@ -22,6 +22,7 @@ function renderMenu(){ list.innerHTML = games.map((game,index) => `<button class
 function showToast(message){const toast=$('#toast');toast.textContent=message;toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove('show'),1800)}
 let audioCtx=null,masterGain=null,bgmTimer=null,bgmStep=0,bgmMode=null,wantBgm='home',audioUnlocked=false;
 function ensureAudio(){if(!audioCtx){try{audioCtx=new (window.AudioContext||window.webkitAudioContext)(); masterGain=audioCtx.createGain(); masterGain.gain.value=0.85; masterGain.connect(audioCtx.destination)}catch{} } if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume().catch(()=>{}); audioUnlocked=!!audioCtx; return audioUnlocked}
+function unlockAudio(){ if(!ensureAudio()) return; if(audioCtx.state!=='running'){ const p=audioCtx.resume(); if(p&&p.then) p.then(()=>{ audioUnlocked=true; if(soundOn && wantBgm && !bgmTimer && !paused) scheduleBGM(); }).catch(()=>{}); } else { audioUnlocked=true; if(soundOn && wantBgm && !bgmTimer && !paused) scheduleBGM(); } }
 function tone(freq,d=.12,type='square',vol=.03,when=0){if(!soundOn||!audioCtx) return; try{const t=audioCtx.currentTime+when,o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(vol,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(masterGain||audioCtx.destination);o.start(t);o.stop(t+d+.02)}catch{}}
 function beep(frequency=440,d=.08,type='square',vol=.03){if(!ensureAudio()) return; tone(frequency,d,type,vol,0)}
 function haptic(name='press'){if(!navigator.vibrate)return;const patterns={press:40,move:25,hit:[40,30,60],shoot:45,jump:[30,20,40],score:[25,20,35],over:[80,40,100],pause:50,start:[30,20,40,20,30],select:30};try{navigator.vibrate(patterns[name]??patterns.press)}catch{}}
@@ -39,6 +40,8 @@ function stopBGM(){if(bgmTimer){clearTimeout(bgmTimer);bgmTimer=null}}
 function scheduleBGM(){if(!soundOn||!audioUnlocked||!wantBgm||paused){bgmTimer=null;return} const seq=bgmSeq[wantBgm]; if(!seq){bgmTimer=null;return} const n=seq.notes[bgmStep%seq.notes.length]; bgmStep++; if(n[0]>0) tone(n[0],n[1]||.1,seq.type||'square',seq.vol||.015,0); const dur=(n[1]||.1)*1000 + (seq.tempo||180); bgmTimer=setTimeout(scheduleBGM,dur)}
 function playBGM(mode){wantBgm=mode; bgmMode=mode; bgmStep=0; stopBGM(); if(!soundOn) return; if(ensureAudio()) scheduleBGM()}
 function refreshBGM(){ if(!soundOn){stopBGM();return} if(wantBgm && ensureAudio() && !bgmTimer && !paused) scheduleBGM()}
+['pointerdown','touchend','mousedown','keydown'].forEach(ev=>document.addEventListener(ev,unlockAudio,{passive:true}));
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible'&&soundOn&&wantBgm&&!bgmTimer&&!paused) refreshBGM(); });
 function isTouch(){return ('ontouchstart' in window)||navigator.maxTouchPoints>0}
 const gameBgm=['car','snake','cricket','tank','sky'];
 function enterMenu(){ if(started) return; started=true; ensureAudio(); $('#startScreen')?.classList.add('hidden'); screenView.classList.remove('hidden'); $('#statusText').textContent='SELECT GAME'; renderMenu(); sfx('start'); playBGM('menu'); }
