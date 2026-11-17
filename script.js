@@ -267,8 +267,7 @@ function drawSky(){const g=gameState; const sx=560/400, sy=430/300; ctx.save(); 
   ctx.strokeStyle='#8c7a63'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(0,234); ctx.lineTo(400,234); ctx.stroke();
   for(let x=0;x<400;x+=16){for(let y=235;y<245;y+=5){rect(x,y,8,5,((x/16+y/5)%2===0)?'#e3d5b8':'#f5eedc'); rect(x+8,y,8,5,((x/16+y/5)%2!==0)?'#e3d5b8':'#f5eedc')}}
   ctx.restore();
-  // footer
-  rect(0,273,400,27,'#f7f4eb'); ctx.fillStyle='#1e1e24'; ctx.font='bold 11px "Courier New",monospace'; ctx.textAlign='center'; ctx.fillText('S / ↑ / TAP TO FLAP',200,290);
+  rect(0,234,400,66,'#efe9dd');
   if(g.mode==='countdown'||g.mode==='ready'){ctx.fillStyle='rgba(36,24,59,.55)'; ctx.fillRect(0,0,400,300); ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.font='bold 34px "Courier New",monospace'; const n=Math.ceil(g.timer/60); ctx.fillText(g.mode==='ready'?'GO':String(Math.max(1,n)),200,145); ctx.font='bold 11px "Courier New",monospace'; ctx.fillText('TAP / S TO START',200,172)}
   if(g.over>0){ctx.fillStyle='#24183bcc';ctx.fillRect(0,0,400,300);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font='bold 18px "Courier New",monospace';ctx.fillText('GAME OVER',200,145);ctx.font='bold 12px "Courier New",monospace';ctx.fillText(`GAPS ${g.gaps}`,200,168)}
   ctx.restore();
