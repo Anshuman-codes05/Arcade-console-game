@@ -72,6 +72,18 @@ function showGameOver(finalScore,options={}){ if(gameOver) return; gameOver=true
 function backToMenu(){ hideGameOver(); cancelAnimationFrame(animation);activeGame=null;paused=false;keys={};canvas.style.background='';const areaEl=document.querySelector('.canvas-area');if(areaEl)areaEl.style.background='';canvasWrap.classList.add('hidden');screenView.classList.remove('hidden');$('#statusText').textContent='SELECT GAME';renderMenu(); if(started) playBGM('menu'); requestAnimationFrame(fitArcade);}
 const gameBg=['#6ab55d','#a5d991','#78c86b','#83bd8a','#efe9dd'];
 function resizeCanvas(){
+  if(window.innerWidth<=600){
+    if(canvasWrap.classList.contains('hidden')) return;
+    const area=document.querySelector('.canvas-area');
+    if(!area) return;
+    const aw=area.clientWidth, ah=area.clientHeight;
+    if(aw<10||ah<10) return;
+    const h=Math.min(ah,Math.round(aw*430/560*1.15));
+    canvas.style.width=`${Math.floor(aw)}px`;
+    canvas.style.height=`${Math.max(1,h)}px`;
+    return;
+  }
+  canvas.style.width='';
   const w=canvas.clientWidth;
   if(!w) return;
   canvas.style.height=`${Math.round(430*w/560)}px`;
@@ -273,19 +285,10 @@ function triggerControl(name, detail = {}){document.dispatchEvent(new CustomEven
 function fitArcade(){
   const root=document.querySelector('.arcade');
   if(!root)return;
-  if(window.innerWidth>600){
-    document.documentElement.style.setProperty('--arcade-scale','1');
-    root.style.transform='';
-    resizeCanvas();
-    return;
-  }
+  document.documentElement.style.setProperty('--arcade-scale','1');
+  root.style.transform='';
   resizeCanvas();
-  const vw=window.innerWidth, vh=window.innerHeight;
-  root.style.transform='scale(1)';
-  const nw=root.offsetWidth||vw, nh=root.offsetHeight||vh;
-  const s=Math.min(vw/nw,vh/nh,1);
-  document.documentElement.style.setProperty('--arcade-scale',String(s));
-  root.style.transform=`translateY(${Math.max(0,Math.round((vh-nh*s)/2))}px) scale(${s})`;
+  requestAnimationFrame(resizeCanvas);
 }
 const themes={
   lavender:{name:'Lavender',description:'Soft lavender shell',shell:'#c4a8e9',light:'#e4d8fa',dark:'#402763',deep:'#24183b',rim:'#8e73bb',rim2:'#9c7fc8',glow:'#ddd0f2',accent:'#7351bd'},
