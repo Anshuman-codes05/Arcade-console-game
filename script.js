@@ -73,14 +73,8 @@ function backToMenu(){ hideGameOver(); cancelAnimationFrame(animation);activeGam
 const gameBg=['#6ab55d','#a5d991','#78c86b','#83bd8a','#efe9dd'];
 function resizeCanvas(){
   if(window.innerWidth<=600){
-    if(canvasWrap.classList.contains('hidden')) return;
-    const area=document.querySelector('.canvas-area');
-    if(!area) return;
-    const aw=area.clientWidth, ah=area.clientHeight;
-    if(aw<10||ah<10) return;
-    const h=Math.min(ah,Math.round(aw*430/560*1.05));
-    canvas.style.width=`${Math.floor(aw)}px`;
-    canvas.style.height=`${Math.max(1,h)}px`;
+    canvas.style.width='';
+    canvas.style.height='';
     return;
   }
   canvas.style.width='';
