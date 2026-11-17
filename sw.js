@@ -1,5 +1,5 @@
-const CACHE = 'arcade-v11';
-const ASSETS = ['./','./index.html','./styles.css?v=11','./script.js?v=11','./manifest.json','./icon-192.png','./icon-512.png','./boot-icon.png?v=11'];
+const CACHE = 'arcade-v12';
+const ASSETS = ['./','./index.html','./styles.css?v=12','./script.js?v=12','./manifest.json','./icon-192.png','./icon-512.png','./boot-icon.png?v=12'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(()=>self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())); });
 self.addEventListener('fetch', e => {
